@@ -50,9 +50,9 @@ namespace PinnacleWrapper
 
             response.EnsureSuccessStatusCode(); // throw if web request failed
 
-            var xmlFormatter = new XmlMediaTypeFormatter {UseXmlSerializer = true};
+            var xmlFormatter = new XmlMediaTypeFormatter { UseXmlSerializer = true };
 
-            var apiResponse = await response.Content.ReadAsAsync<T>(new[] {xmlFormatter});
+            var apiResponse = await response.Content.ReadAsAsync<T>(new[] { xmlFormatter });
 
             if (apiResponse.IsValid) return apiResponse;
 
@@ -80,7 +80,7 @@ namespace PinnacleWrapper
 
             response.EnsureSuccessStatusCode(); // throw if web request failed
 
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
         }
@@ -95,7 +95,7 @@ namespace PinnacleWrapper
 
             response.EnsureSuccessStatusCode(); // throw if web request failed
 
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
         }
